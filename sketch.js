@@ -186,11 +186,12 @@ function setup() {
   greensmall4.shapeColor="green";
   greensmall42.shapeColor="white";
   
+  
   //blue pawns
   bluepawn1=createSprite(50,50,15,15)
   bluepawn1.shapeColor="blue"
   bluepawn2=createSprite(50,120,15,15)
-  bluepawn2.shapeColor="blue"
+  bluepawn2.shapeColor="lightblue"
   bluepawn3=createSprite(120,120,15,15)
   bluepawn3.shapeColor="blue"
   bluepawn4=createSprite(120,50,15,15)
@@ -198,6 +199,7 @@ function setup() {
   bluepawns = [bluepawn1,bluepawn2,bluepawn3,bluepawn4];
   
   //red pawns
+
   redpawn1=createSprite(50,320,15,15)
   redpawn1.shapeColor="red"
   redpawn2=createSprite(120,320,15,15)
@@ -230,6 +232,8 @@ function setup() {
   greenpawn4.shapeColor="green"
   greenpawns=[greenpawn1,greenpawn2,greenpawn3,greenpawn4];
 
+  stroke("black")
+  strokeWeight(3)
   //CREATE PATHS FOR PAWNS
   //redpawnspath
   pushsteps(grid["red"],5,0,-30,195,400);
@@ -317,9 +321,9 @@ function pushsteps(grid,steps,xoff, yoff,x,y)
 }
 
 
-function mouseReleased(){
-
-  dice.rotationSpeed=0;
+function keyPressed(){
+if(keyCode===65)
+  {dice.rotationSpeed=0;
       num=Math.round(random(1,6))
       switch(num)
       {
@@ -344,6 +348,7 @@ function mouseReleased(){
         default: break
         
       }
+    }
   }
 
 function movePawn(pawn,index)
@@ -408,14 +413,14 @@ if(bluepawns[0].x===homesquare.x && bluepawns[0].y===homesquare.y || bluepawns[1
 
 //make red pawn move
   if(gameState === "red"){
-    if(mouseReleased && positions[gameState]["pawn1"]>57)
+    if(keyPressed && positions[gameState]["pawn1"]>56)
 {
   gameState==="green"
   num=0
 }
     if(onboard.red === 0)
     {        
-      if(mouseReleased && num===6)
+      if(keyPressed && num===6)
       {
 
         onboard.red++;
@@ -427,7 +432,7 @@ if(bluepawns[0].x===homesquare.x && bluepawns[0].y===homesquare.y || bluepawns[1
         gameState="red"
         
       }
-      else if(mouseReleased && num===1 || num===2 || num===3 || num===4 || num===5){
+      else if(keyPressed && num===1 || num===2 || num===3 || num===4 || num===5){
         gameState="green"
         num=0
       }
@@ -454,14 +459,14 @@ if(bluepawns[0].x===homesquare.x && bluepawns[0].y===homesquare.y || bluepawns[1
 //make green pawn move
 if(gameState === "green"){
  
-  if(mouseReleased && positions[gameState]["pawn1"]>57)
+  if(keyPressed && positions[gameState]["pawn1"]>56)
   {
     gameState==="yellow"
     num=0
   }
   if(onboard.green === 0)
   {        
-    if(mouseReleased && num===6)
+    if(keyPressed && num===6)
     {
 
       onboard.green++;
@@ -473,7 +478,7 @@ if(gameState === "green"){
       gameState="green"
       
     }
-    else if(mouseReleased && num===1 || num===2 || num===3 || num===4 || num===5){
+    else if(keyPressed && num===1 || num===2 || num===3 || num===4 || num===5){
       gameState="yellow"
       num=0
     }
@@ -496,17 +501,17 @@ if(gameState === "green"){
 
 }
 
-//make yelloww pawn move
+//make yellow pawn move
 if(gameState === "yellow"){
     
-  if(mouseReleased && positions[gameState]["pawn1"]>57)
+  if(keyPressed && positions[gameState]["pawn1"]>56)
   {
     gameState==="blue"
     num=0
   }
   if(onboard.yellow === 0)
   {        
-    if(mouseReleased && num===6)
+    if(keyPressed && num===6)
     {
 
       onboard.yellow++;
@@ -518,7 +523,7 @@ if(gameState === "yellow"){
       gameState="yellow"
       
     }
-    else if(mouseReleased && num===1 || num===2 || num===3 || num===4 || num===5){
+    else if(keyPressed && num===1 || num===2 || num===3 || num===4 || num===5){
       gameState="blue"
       num=0
     }
@@ -543,7 +548,7 @@ if(gameState === "yellow"){
 
 //make blue pawn move
 if(gameState === "blue"){
-  if(mouseReleased && positions[gameState]["pawn1"]>57)
+  if(keyPressed && positions[gameState]["pawn1"]>56)
   {
     gameState==="red"
     num=0
@@ -551,7 +556,7 @@ if(gameState === "blue"){
 
   if(onboard.blue === 0)
   {        
-    if(mouseReleased && num===6)
+    if(keyPressed && num===6)
     {
 
       onboard.blue++;
@@ -563,7 +568,7 @@ if(gameState === "blue"){
       gameState="blue"
       
     }
-    else if(mouseReleased && num===1 || num===2 || num===3 || num===4 || num===5){
+    else if(keyPressed && num===1 || num===2 || num===3 || num===4 || num===5){
       gameState="red"
       num=0
     }
@@ -580,18 +585,19 @@ if(gameState === "blue"){
   if(onboard.blue===1 && num===6)
   {
     b1=createSprite(bluepawns[0].x, bluepawns[0].y, 20,20)
+    b1.depth=bluepawns[0].depth-1
     b2=createSprite(bluepawns[1].x, bluepawns[1].y, 20,20)
-    gameState="blue"
+    b2.depth=bluepawns[1].depth-1
 
-    /*if(mousePressed(b1))
-    {
-      movePawn(bluepawns[0], "pawn1")
+    if(mousePressedOver(b1))
+    {movePawn(bluepawns[0], "pawn1")
+    b1.shapeColor="white"
     num=0;
-    gameState="red"
+    gameState="blue"
  
     }
 
-   /* if(mousePressed(b2))
+    if(mousePressedOver(b2))
     {
       onboard.blue++;
       pawnout.blue.pawn2 = 1;
@@ -599,18 +605,17 @@ if(gameState === "blue"){
       bluepawns[1].x = grid[gameState][positions[gameState]["pawn2"]-1].x;
       bluepawns[1].y = grid[gameState][positions[gameState]["pawn2"]-1].y;
       num=0;
-      gameState="blue"
+      gameState="waitingblue"
+    }
 
-      if (gameState="blue" && onboard.blue===2 && num===1 || num===2 || num===3 || num===4 || num===5 )
+      if (gameState==="waitingblue" && onboard.blue===2 && (num===1 || num===2 || num===3 || num===4 || num===5 ))
   {
     movePawn(bluepawns[1], "pawn2")
     num=0;
     gameState="red"
   }
 
-      
-    }
-    */
+    
   }
 
 }
